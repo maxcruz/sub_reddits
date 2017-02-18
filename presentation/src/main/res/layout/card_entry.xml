@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/cardview_default_elevation"
+    card_view:cardUseCompatPadding="true"
+    tools:targetApi="lollipop">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:contentDescription="@null"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/paragraph_separator"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/grey_400"
+            android:textStyle="bold"
+            tools:text="lorem/ipsum" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textBoard"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/paragraph_separator"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+        <TextView
+            android:id="@+id/textSubscribers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/textTitle"
+            android:layout_alignRight="@id/textTitle"
+            android:layout_below="@id/textTitle"
+            android:layout_marginBottom="@dimen/paragraph_separator"
+            android:layout_marginTop="@dimen/paragraph_separator"
+            android:drawableLeft="@drawable/ic_subscribers"
+            android:drawableStart="@drawable/ic_subscribers"
+            android:gravity="center_vertical"
+            tools:text="103" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
