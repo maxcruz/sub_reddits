@@ -21,6 +21,9 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
    sourceSets {
@@ -40,7 +43,8 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':data')
+    releaseCompile project(path: ':data', configuration: 'release')
+    debugCompile project(path: ':data', configuration: 'debug')
     compile project(':domain')
     testCompile "junit:junit:$junit_version"
     compile "com.android.support:appcompat-v7:$support_library_version"
