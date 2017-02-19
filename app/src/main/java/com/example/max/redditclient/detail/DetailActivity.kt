@@ -34,16 +34,12 @@ import android.view.MenuItem
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.example.data.DetailRepository
-import com.example.data.local.LocalStorage
-import com.example.domain.interactors.GetSubRedditById
 import com.example.domain.models.SubReddit
 import com.example.max.redditclient.R
+import com.example.max.redditclient.RedditApplication
 import com.example.max.redditclient.detail.views.TextItemLayout
-import com.example.max.redditclient.libraries.images.GlideImageLoader
 import com.example.max.redditclient.libraries.images.ImageLoader
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class DetailActivity: AppCompatActivity(), DetailContract.View {
 
@@ -66,9 +62,9 @@ class DetailActivity: AppCompatActivity(), DetailContract.View {
     @BindView(R.id.itemDescription)
     lateinit var itemDescription: TextItemLayout
 
-    //@Inject
+    @Inject
     lateinit var mImageLoader: ImageLoader
-    //@Inject
+    @Inject
     lateinit var mPresenter: DetailContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,13 +78,7 @@ class DetailActivity: AppCompatActivity(), DetailContract.View {
     }
 
     private fun setupInjection() {
-        val localStorage = LocalStorage()
-        val detailModel = DetailRepository(localStorage)
-        val subscribeOn = Schedulers.io()
-        val observeOn = AndroidSchedulers.mainThread()
-        val getSubRedditById = GetSubRedditById(detailModel, subscribeOn, observeOn)
-        mPresenter = DetailPresenter(this, getSubRedditById)
-        mImageLoader = GlideImageLoader(this)
+        (application as RedditApplication).getDetailComponent(this).inject(this)
     }
 
     override fun onResume() {

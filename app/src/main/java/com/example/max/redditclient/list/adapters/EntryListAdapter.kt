@@ -41,12 +41,6 @@ import com.example.max.redditclient.list.ListContract
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-
-/**
- * Load each subReddit in the recycler view
- *
- * @author Max Cruz
- */
 class EntryListAdapter(val view: ListContract.View,
                        val dataSet: LinkedList<SubReddit>,
                        val imageLoader: ImageLoader):

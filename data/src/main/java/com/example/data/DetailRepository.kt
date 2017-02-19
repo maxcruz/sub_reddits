@@ -7,7 +7,6 @@ import com.example.domain.models.SubReddit
 import com.example.domain.repository.DetailContractModel
 import io.reactivex.Observable
 
-
 class DetailRepository(val localStorage: LocalStorage): DetailContractModel {
 
     override fun getSubRedditById(id: String): Observable<SubReddit> {

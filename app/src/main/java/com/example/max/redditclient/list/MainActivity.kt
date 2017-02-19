@@ -40,20 +40,12 @@ import android.support.v7.widget.Toolbar
 import butterknife.BindString
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.example.data.ListRepository
-import com.example.data.local.LocalStorage
-import com.example.data.remote.RedditService
-import com.example.data.remote.ServiceFactory
-import com.example.domain.interactors.ListLocalSubReddits
-import com.example.domain.interactors.SynchronizeRemoteData
 import com.example.domain.models.SubReddit
 import com.example.max.redditclient.R
+import com.example.max.redditclient.RedditApplication
 import com.example.max.redditclient.detail.DetailActivity
-import com.example.max.redditclient.libraries.images.GlideImageLoader
 import com.example.max.redditclient.list.adapters.EntryListAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.*
+import javax.inject.Inject
 
 /**
  * View for the list of reddits from Reddit
@@ -73,9 +65,9 @@ class MainActivity: AppCompatActivity(), ListContract.View {
     @BindString(R.string.app_name)
     lateinit var appName: String
 
-    //@Inject
+    @Inject
     lateinit var mAdapter: EntryListAdapter
-    //@Inject
+    @Inject
     lateinit var mPresenter: ListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,16 +82,7 @@ class MainActivity: AppCompatActivity(), ListContract.View {
     }
 
     private fun setupInjection() {
-        val imageLoader = GlideImageLoader(this)
-        mAdapter = EntryListAdapter(this, LinkedList(), imageLoader)
-        val redditService = ServiceFactory.createService(RedditService::class.java, RedditService.BASE_URL)
-        val localStorage = LocalStorage()
-        val listModel = ListRepository(redditService, localStorage)
-        val subscribeOn = Schedulers.io()
-        val observeOn = AndroidSchedulers.mainThread()
-        val synchronizeRemoteData = SynchronizeRemoteData(listModel, subscribeOn, observeOn)
-        val listLocalSubReddits = ListLocalSubReddits(listModel, subscribeOn, observeOn)
-        mPresenter = ListPresenter(this, synchronizeRemoteData, listLocalSubReddits)
+        (application as RedditApplication).getListComponent(this).inject(this)
     }
 
     private fun setupRecyclerView() {
