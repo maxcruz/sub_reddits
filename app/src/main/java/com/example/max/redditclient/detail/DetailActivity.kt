@@ -31,6 +31,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.data.DetailRepository
@@ -38,6 +39,9 @@ import com.example.data.local.LocalStorage
 import com.example.domain.interactors.GetSubRedditById
 import com.example.domain.models.SubReddit
 import com.example.max.redditclient.R
+import com.example.max.redditclient.detail.views.TextItemLayout
+import com.example.max.redditclient.libraries.images.GlideImageLoader
+import com.example.max.redditclient.libraries.images.ImageLoader
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -49,7 +53,22 @@ class DetailActivity: AppCompatActivity(), DetailContract.View {
 
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
+    @BindView(R.id.imageBanner)
+    lateinit var imageBanner: ImageView
+    @BindView(R.id.itemName)
+    lateinit var itemName: TextItemLayout
+    @BindView(R.id.itemTitle)
+    lateinit var itemTitle: TextItemLayout
+    @BindView(R.id.itemSubscribers)
+    lateinit var itemSubscribers: TextItemLayout
+    @BindView(R.id.itemCategory)
+    lateinit var itemCategory: TextItemLayout
+    @BindView(R.id.itemDescription)
+    lateinit var itemDescription: TextItemLayout
 
+    //@Inject
+    lateinit var mImageLoader: ImageLoader
+    //@Inject
     lateinit var mPresenter: DetailContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +88,7 @@ class DetailActivity: AppCompatActivity(), DetailContract.View {
         val observeOn = AndroidSchedulers.mainThread()
         val getSubRedditById = GetSubRedditById(detailModel, subscribeOn, observeOn)
         mPresenter = DetailPresenter(this, getSubRedditById)
+        mImageLoader = GlideImageLoader(this)
     }
 
     override fun onResume() {
@@ -89,7 +109,19 @@ class DetailActivity: AppCompatActivity(), DetailContract.View {
     }
 
     override fun loadContentData(subReddit: SubReddit) {
-        toolbar.title = subReddit.title
+        val bannerImg = subReddit.bannerImg
+        val displayNamePrefixed = subReddit.displayNamePrefixed
+        val title = subReddit.title
+        val subscribers = subReddit.subscribers
+        val advertiserCategory = subReddit.advertiserCategory
+        val submitText = subReddit.submitText
+        toolbar.title = subReddit.headerTitle
+        bannerImg?.let { mImageLoader.load(imageBanner, bannerImg) }
+        itemName.setValue(displayNamePrefixed)
+        title?.let { itemTitle.setValue(title) }
+        subscribers?.let { itemSubscribers.setValue(subscribers.toString()) }
+        advertiserCategory?.let { itemCategory.setValue(advertiserCategory) }
+        submitText?.let { itemDescription.setValue(submitText) }
     }
 
     override fun getContext(): Context = this

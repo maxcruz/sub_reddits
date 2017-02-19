@@ -31,17 +31,11 @@ data class SubReddit(
         val displayNamePrefixed: String,
         val publicDescription: String,
         val keyColor: String? = null,
-        val iconImg: String? = null,
-
         val bannerImg: String? = null,
-        val submitText: String? = null,
-        val displayName: String? = null,
-        val headerImg: String? = null,
-        val title: String? = null,
         val headerTitle: String? = null,
-        val description: String? = null,
-        val subscribers: Int? = null,
-        val url: String? = null,
+        val title: String? = null,
         val advertiserCategory: String? = null,
-        val subRedditType: String? = null
+        val submitText: String? = null,
+        val subscribers: Int? = null,
+        val iconImg: String? = null
 )

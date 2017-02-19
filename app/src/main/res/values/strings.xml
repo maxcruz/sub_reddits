@@ -4,4 +4,9 @@
     <string name="offline_message">Ohhh no! you are offline. The last saved content was loaded</string>
     <string name="button_retry">Retry</string>
     <string name="common_default" />
+    <string name="label_name">Name</string>
+    <string name="label_title">Title</string>
+    <string name="label_subscribers">Subscribers</string>
+    <string name="label_category">Category</string>
+    <string name="label_description">Description</string>
 </resources>

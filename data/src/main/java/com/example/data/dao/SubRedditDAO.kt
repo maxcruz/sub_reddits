@@ -109,15 +109,10 @@ class SubRedditDAO(): BaseModel() {
         iconImg = subReddit.iconImg
         bannerImg = subReddit.bannerImg
         submitText = subReddit.submitText
-        displayName = subReddit.displayName
-        headerImg = subReddit.headerImg
         title = subReddit.title
         headerTitle = subReddit.headerTitle
-        description = subReddit.description
         subscribers = subReddit.subscribers
-        url = subReddit.url
         advertiserCategory = subReddit.advertiserCategory
-        subRedditType = subReddit.subRedditType
     }
 
     fun toSubReddit() = SubReddit(
@@ -128,15 +123,10 @@ class SubRedditDAO(): BaseModel() {
             iconImg = iconImg,
             bannerImg = bannerImg,
             submitText = submitText,
-            displayName = displayName,
-            headerImg = headerImg,
             title = title,
             headerTitle = headerTitle,
-            description = description,
             subscribers = subscribers,
-            url = url,
-            advertiserCategory = advertiserCategory,
-            subRedditType = subRedditType
+            advertiserCategory = advertiserCategory
     )
 
 }
