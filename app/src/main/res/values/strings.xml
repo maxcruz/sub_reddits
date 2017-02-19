@@ -3,4 +3,5 @@
     <string name="synchronized_message">Synchronized data successful :-)</string>
     <string name="offline_message">Ohhh no! you are offline. The last saved content was loaded</string>
     <string name="button_retry">Retry</string>
+    <string name="common_default" />
 </resources>

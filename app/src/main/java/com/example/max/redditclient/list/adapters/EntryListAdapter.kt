@@ -26,7 +26,6 @@
 
 package com.example.max.redditclient.list.adapters
 
-import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -38,6 +37,7 @@ import butterknife.ButterKnife
 import com.example.domain.models.SubReddit
 import com.example.max.redditclient.R
 import com.example.max.redditclient.libraries.images.ImageLoader
+import com.example.max.redditclient.list.ListContract
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
@@ -47,7 +47,7 @@ import java.util.*
  *
  * @author Max Cruz
  */
-class EntryListAdapter(val context: Context,
+class EntryListAdapter(val view: ListContract.View,
                        val dataSet: LinkedList<SubReddit>,
                        val imageLoader: ImageLoader):
         RecyclerView.Adapter<EntryListAdapter.ViewHolder>() {
@@ -69,10 +69,11 @@ class EntryListAdapter(val context: Context,
             }
             image.borderColor = color
         }
+        holder?.itemView?.setOnClickListener { view.goToEntryDetail(subReddit.id) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(view.getContext())
         val itemView = inflater.inflate(R.layout.card_entry, parent, false)
         return ViewHolder(itemView)
     }

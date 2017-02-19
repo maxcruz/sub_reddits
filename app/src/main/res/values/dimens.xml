@@ -3,4 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="paragraph_separator">6dp</dimen>
+    <dimen name="min_padding">3dp</dimen>
+    <dimen name="large_text_size">18sp</dimen>
+    <dimen name="medium_text_size">14sp</dimen>
 </resources>
