@@ -26,7 +26,7 @@
 
 package com.example.data.remote
 
-import com.example.domain.models.Reddits
+import com.example.data.dao.RedditsDAO
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
@@ -38,6 +38,6 @@ interface RedditService {
     }
 
     @GET("reddits.json")
-    fun getReddits() : Observable<Response<Reddits>>
+    fun getReddits() : Observable<Response<RedditsDAO>>
 
 }

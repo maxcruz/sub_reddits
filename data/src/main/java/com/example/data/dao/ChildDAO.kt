@@ -24,16 +24,12 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.data.dao
 
-import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import com.squareup.moshi.Json
 
-interface ListContractModel {
+data class ChildDAO(
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    @Json(name = "data") val subReddit: SubRedditDAO
 
-}
+)

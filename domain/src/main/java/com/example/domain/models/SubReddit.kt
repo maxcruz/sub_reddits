@@ -26,35 +26,22 @@
 
 package com.example.domain.models
 
-import com.squareup.moshi.Json
-
-
 data class SubReddit(
+        val id: String,
+        val displayNamePrefixed: String,
+        val publicDescription: String,
+        val keyColor: String? = null,
+        val iconImg: String? = null,
 
-        @Json(name = "banner_img") val bannerImg: String? = null,
-        @Json(name = "display_name_prefixed") val displayNamePrefixed: String? = null,
-        @Json(name = "submit_text") val submitText: String? = null,
-        @Json(name = "display_name") val displayName: String? = null,
-        @Json(name = "header_img") val headerImg: String? = null,
-        @Json(name = "title") val title: String? = null,
-        @Json(name = "over18") val over18: Boolean? = null,
-        @Json(name = "spoilers_enabled") val spoilersEnabled: Boolean? = null,
-        @Json(name = "icon_img") val iconImg: String? = null,
-        @Json(name = "header_title") val headerTitle: String? = null,
-        @Json(name = "description") val description: String? = null,
-        @Json(name = "subscribers") val subscribers: Int? = null,
-        @Json(name = "key_color") val keyColor: String? = null,
-        @Json(name = "url") val url: String? = null,
-        @Json(name = "advertiser_category") val advertiserCategory: String? = null,
-        @Json(name = "public_description") val publicDescription: String? = null,
-        @Json(name = "subreddit_type") val subRedditType: String? = null
-
-) {
-
-    companion object {
-
-        val TAG: String = SubReddit::class.java.simpleName
-
-    }
-
-}
+        val bannerImg: String? = null,
+        val submitText: String? = null,
+        val displayName: String? = null,
+        val headerImg: String? = null,
+        val title: String? = null,
+        val headerTitle: String? = null,
+        val description: String? = null,
+        val subscribers: Int? = null,
+        val url: String? = null,
+        val advertiserCategory: String? = null,
+        val subRedditType: String? = null
+)

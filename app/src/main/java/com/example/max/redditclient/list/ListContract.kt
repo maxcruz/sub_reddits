@@ -24,16 +24,43 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.max.redditclient.list
 
+import android.content.Context
 import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import io.reactivex.Completable
 
-interface ListContractModel {
+/**
+ * MVP operation for the main list. In this contract is just defined the view and the presenter,
+ * the model contract is separated in the domain layer
+ *
+ * @author Max Cruz
+ */
+interface ListContract {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    /**
+     * Operations that the presenter can invoke from the view
+     */
+    interface View {
+
+        fun showProgressIndicator(display: Boolean)
+        fun showSynchronizedMessage()
+        fun showOfflineMessage()
+        fun clearEntries()
+        fun appendEntries(list: List<SubReddit>)
+        fun goToEntryDetail(subRedditId: String)
+        fun getContext(): Context
+
+    }
+
+    /**
+     * Operations offered to the view to interact with the domain layer
+     */
+    interface Presenter {
+
+        fun synchronize()
+        fun loadSavedEntries(): Completable
+
+    }
 
 }

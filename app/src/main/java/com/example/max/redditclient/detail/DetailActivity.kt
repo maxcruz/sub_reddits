@@ -24,16 +24,14 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.max.redditclient.detail
 
-import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import android.support.v7.app.AppCompatActivity
 
-interface ListContractModel {
+class DetailActivity: AppCompatActivity() {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    companion object {
+        val ID_KEY = "subRedditIdKey"
+    }
 
 }

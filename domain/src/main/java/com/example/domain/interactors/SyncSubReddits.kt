@@ -24,16 +24,23 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.domain.interactors
 
-import com.example.domain.models.SubReddit
+import co.tappsi.driver.domain.interactors.UseCase
+import com.example.domain.repository.ListContractModel
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 
-interface ListContractModel {
+class SyncSubReddits(val listModel: ListContractModel,
+                    subscribeOn: Scheduler, observeOn: Scheduler):
+        UseCase<UseCase.Input, UseCase.Output>(subscribeOn, observeOn) {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    override fun executeUseCase(values: Input?): Observable<Output> {
+        return listModel.getRemoteEntries().map {
+            listModel.clearLocalStorage()
+            listModel.saveToLocalStorage(it)
+            object : Output {}
+        }
+    }
 
 }

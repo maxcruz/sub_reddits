@@ -24,16 +24,17 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.max.redditclient
 
-import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import android.app.Application
+import com.raizlabs.android.dbflow.config.FlowConfig
+import com.raizlabs.android.dbflow.config.FlowManager
 
-interface ListContractModel {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+class RedditApplication: Application() {
 
+    override fun onCreate() {
+        super.onCreate()
+        FlowManager.init(FlowConfig.Builder(this).openDatabasesOnInit(true).build())
+    }
 }

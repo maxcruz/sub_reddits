@@ -24,16 +24,29 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.data.local
 
-import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import com.raizlabs.android.dbflow.config.DatabaseDefinition
+import com.raizlabs.android.dbflow.config.FlowManager
+import com.raizlabs.android.dbflow.sql.language.SQLite
+import com.raizlabs.android.dbflow.structure.Model
 
-interface ListContractModel {
+class LocalStorage {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    private val mDataBase: DatabaseDefinition = FlowManager.getDatabase(AppDataBase::class.java)
+
+    fun saveObjectList(clazz: Class<out Model>, list: List<Model>) {
+        val adapter = mDataBase.getModelAdapterForTable(clazz)
+        adapter.insertAll(list)
+    }
+
+    fun deleteAllObjects(clazz: Class<out Model>) {
+        val adapter = mDataBase.getModelAdapterForTable(clazz)
+        adapter.deleteAll(retrieveAllObjects(clazz))
+    }
+
+    fun retrieveAllObjects(clazz: Class<out Model>): List<Model> {
+        return SQLite.select().from(clazz).queryList()
+    }
 
 }

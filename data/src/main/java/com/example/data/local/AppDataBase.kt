@@ -24,16 +24,16 @@
  * USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.example.domain.repository
+package com.example.data.local
 
-import com.example.domain.models.SubReddit
-import io.reactivex.Observable
+import com.raizlabs.android.dbflow.annotation.Database
 
-interface ListContractModel {
+@Database(name = AppDataBase.NAME, version = AppDataBase.VERSION)
+class AppDataBase {
 
-   fun getRemoteEntries(): Observable<List<SubReddit>>
-   fun saveToLocalStorage(list: List<SubReddit>)
-   fun clearLocalStorage()
-   fun getLocalEntries(): Observable<List<SubReddit>>
+    companion object {
+        const val NAME = "RedditDataBase"
+        const val VERSION = 1
+    }
 
 }
