@@ -27,8 +27,8 @@
 package com.example.max.redditclient.list
 
 import com.example.domain.exceptions.OfflineModeException
-import com.example.domain.interactors.GetSubReddits
-import com.example.domain.interactors.SyncSubReddits
+import com.example.domain.interactors.ListLocalSubReddits
+import com.example.domain.interactors.SynchronizeRemoteData
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.net.SocketTimeoutException
@@ -41,13 +41,13 @@ import java.util.concurrent.TimeUnit
  * @author Max Cruz
  */
 class ListPresenter(val view: ListContract.View,
-                    val synSubReddits: SyncSubReddits,
-                    val getEntriesUseCase: GetSubReddits):
+                    val synchronizeRemoteData: SynchronizeRemoteData,
+                    val listLocalSubReddits: ListLocalSubReddits):
         ListContract.Presenter {
 
     override fun synchronize() {
         view.showProgressIndicator(true)
-        synSubReddits.execute().doFinally { loadSavedEntries().subscribe() }.subscribe(
+        synchronizeRemoteData.execute().doFinally { loadSavedEntries().subscribe() }.subscribe(
                 { view.showSynchronizedMessage() },
                 {
                     when (it) {
@@ -67,7 +67,7 @@ class ListPresenter(val view: ListContract.View,
     override fun loadSavedEntries(): Completable {
         view.clearEntries()
         return Completable.create { emitter ->
-            getEntriesUseCase.execute().doFinally { view.showProgressIndicator(false) }.subscribe (
+            listLocalSubReddits.execute().doFinally { view.showProgressIndicator(false) }.subscribe (
                 { output -> view.appendEntries(output.list) }
             )
             emitter.onComplete()

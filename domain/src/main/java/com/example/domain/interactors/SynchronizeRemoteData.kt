@@ -31,8 +31,8 @@ import com.example.domain.repository.ListContractModel
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-class SyncSubReddits(val listModel: ListContractModel,
-                    subscribeOn: Scheduler, observeOn: Scheduler):
+class SynchronizeRemoteData(val listModel: ListContractModel,
+                            subscribeOn: Scheduler, observeOn: Scheduler):
         UseCase<UseCase.Input, UseCase.Output>(subscribeOn, observeOn) {
 
     override fun executeUseCase(values: Input?): Observable<Output> {

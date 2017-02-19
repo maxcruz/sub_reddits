@@ -6,9 +6,9 @@ import com.example.domain.repository.ListContractModel
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-class GetSubReddits(val listModel: ListContractModel,
-                    subscribeOn: Scheduler, observeOn: Scheduler) :
-        UseCase<UseCase.Input, GetSubReddits.Output>(subscribeOn, observeOn) {
+class ListLocalSubReddits(val listModel: ListContractModel,
+                          subscribeOn: Scheduler, observeOn: Scheduler) :
+        UseCase<UseCase.Input, ListLocalSubReddits.Output>(subscribeOn, observeOn) {
 
     override fun executeUseCase(values: Input?): Observable<Output> {
         return listModel.getLocalEntries().map(::Output)

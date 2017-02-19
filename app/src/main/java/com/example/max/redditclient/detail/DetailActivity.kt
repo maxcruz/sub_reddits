@@ -26,12 +26,72 @@
 
 package com.example.max.redditclient.detail
 
+import android.content.Context
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.MenuItem
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.example.data.DetailRepository
+import com.example.data.local.LocalStorage
+import com.example.domain.interactors.GetSubRedditById
+import com.example.domain.models.SubReddit
+import com.example.max.redditclient.R
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class DetailActivity: AppCompatActivity() {
+class DetailActivity: AppCompatActivity(), DetailContract.View {
 
     companion object {
         val ID_KEY = "subRedditIdKey"
     }
+
+    @BindView(R.id.toolbar)
+    lateinit var toolbar: Toolbar
+
+    lateinit var mPresenter: DetailContract.Presenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_detail)
+        ButterKnife.bind(this)
+        setSupportActionBar(toolbar)
+        setupInjection()
+        val idSubReddit = intent.getStringExtra(ID_KEY)
+        mPresenter.getSubReddit(idSubReddit)
+    }
+
+    private fun setupInjection() {
+        val localStorage = LocalStorage()
+        val detailModel = DetailRepository(localStorage)
+        val subscribeOn = Schedulers.io()
+        val observeOn = AndroidSchedulers.mainThread()
+        val getSubRedditById = GetSubRedditById(detailModel, subscribeOn, observeOn)
+        mPresenter = DetailPresenter(this, getSubRedditById)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            this.onBackPressed()
+        }
+        return true
+    }
+
+    override fun loadContentData(subReddit: SubReddit) {
+        toolbar.title = subReddit.title
+    }
+
+    override fun getContext(): Context = this
 
 }

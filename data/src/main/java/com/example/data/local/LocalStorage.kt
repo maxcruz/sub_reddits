@@ -28,6 +28,7 @@ package com.example.data.local
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.config.FlowManager
+import com.raizlabs.android.dbflow.sql.language.SQLCondition
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.raizlabs.android.dbflow.structure.Model
 
@@ -47,6 +48,13 @@ class LocalStorage {
 
     fun retrieveAllObjects(clazz: Class<out Model>): List<Model> {
         return SQLite.select().from(clazz).queryList()
+    }
+
+    fun retrieveSingleItem(clazz: Class<out Model>, condition: SQLCondition): Model {
+        return SQLite.select().from(clazz).
+                where(condition).
+                queryList().
+                first()
     }
 
 }

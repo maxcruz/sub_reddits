@@ -44,8 +44,8 @@ import com.example.data.ListRepository
 import com.example.data.local.LocalStorage
 import com.example.data.remote.RedditService
 import com.example.data.remote.ServiceFactory
-import com.example.domain.interactors.GetSubReddits
-import com.example.domain.interactors.SyncSubReddits
+import com.example.domain.interactors.ListLocalSubReddits
+import com.example.domain.interactors.SynchronizeRemoteData
 import com.example.domain.models.SubReddit
 import com.example.max.redditclient.R
 import com.example.max.redditclient.detail.DetailActivity
@@ -89,9 +89,6 @@ class MainActivity: AppCompatActivity(), ListContract.View {
         setupSwipeRefresh()
     }
 
-    /**
-     *
-     */
     private fun setupInjection() {
         val imageLoader = GlideImageLoader(this)
         mAdapter = EntryListAdapter(this, LinkedList(), imageLoader)
@@ -100,14 +97,11 @@ class MainActivity: AppCompatActivity(), ListContract.View {
         val listModel = ListRepository(redditService, localStorage)
         val subscribeOn = Schedulers.io()
         val observeOn = AndroidSchedulers.mainThread()
-        val getSubReddits = GetSubReddits(listModel, subscribeOn, observeOn)
-        val syncSubReddits = SyncSubReddits(listModel, subscribeOn, observeOn)
-        mPresenter = ListPresenter(this, syncSubReddits, getSubReddits)
+        val synchronizeRemoteData = SynchronizeRemoteData(listModel, subscribeOn, observeOn)
+        val listLocalSubReddits = ListLocalSubReddits(listModel, subscribeOn, observeOn)
+        mPresenter = ListPresenter(this, synchronizeRemoteData, listLocalSubReddits)
     }
 
-    /**
-     *
-     */
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         mRecyclerList.layoutManager = layoutManager
@@ -117,9 +111,6 @@ class MainActivity: AppCompatActivity(), ListContract.View {
         }
     }
 
-    /**
-     *
-     */
     private fun setupSwipeRefresh() {
         mSwipeRefresh.setOnRefreshListener({
             mPresenter.synchronize()
