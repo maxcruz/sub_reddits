@@ -50,8 +50,4 @@ dependencies {
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$dbflow_version"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:$dbflow_version"
     compile "com.github.Raizlabs.DBFlow:dbflow:$dbflow_version"
-
-    testCompile "junit:junit:$junit_version"
-    testCompile "org.mockito:mockito-core:2.7.10"
-    testCompile "org.robolectric:robolectric:3.2.2"
 }
