@@ -1,4 +1,4 @@
-package co.tappsi.driver.domain.interactors
+package com.example.domain.interactors
 
 import io.reactivex.Observable
 import io.reactivex.Scheduler

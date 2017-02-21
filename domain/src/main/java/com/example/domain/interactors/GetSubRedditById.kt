@@ -1,6 +1,5 @@
 package com.example.domain.interactors
 
-import co.tappsi.driver.domain.interactors.UseCase
 import com.example.domain.models.SubReddit
 import com.example.domain.repository.DetailContractModel
 import io.reactivex.Observable
