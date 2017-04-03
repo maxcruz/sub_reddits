@@ -30,6 +30,7 @@ android {
         debug.java.srcDirs += 'src/debug/kotlin'
     }
 
+    buildToolsVersion '25.0.0'
 }
 
 kapt {
